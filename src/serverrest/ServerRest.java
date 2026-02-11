@@ -33,11 +33,15 @@ public class ServerRest {
             // Crea il server sulla porta specificata
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
-            // Registra gli handler per gli endpoint
-            server.createContext("/api/calcola/post", new PostHandlerV1());
-            server.createContext("/api/calcola/get", new GetHandlerV1());
-            
-            
+            // API Versione 1
+            server.createContext("/api/v1/calcola/post", new PostHandlerV1());
+            server.createContext("/api/v1/calcola/get", new GetHandlerV1());
+
+            // API Versione 2
+            server.createContext("/api/v2/calcola/post", new PostHandlerV2());
+            server.createContext("/api/v2/calcola/get", new GetHandlerV2());
+
+            // Endpoint legacy (compatibilità)
             server.createContext("/api/calcola/post", new PostHandlerV1());
             server.createContext("/api/calcola/get", new GetHandlerV1());
             
@@ -95,6 +99,9 @@ public class ServerRest {
         operatori.put("sottrazione", "SOTTRAZIONE o -");
         operatori.put("moltiplicazione", "MOLTIPLICAZIONE o * o X");
         operatori.put("divisione", "DIVISIONE o /");
+        operatori.put("potenza", "POTENZA o ^");
+        operatori.put("radice", "RADICE o sqrt");
+        operatori.put("modulo", "MODULO o ||");
         info.put("operatori_supportati", operatori);
         
         String jsonRisposta = gson.toJson(info);
