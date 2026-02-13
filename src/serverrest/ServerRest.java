@@ -99,6 +99,9 @@ public class ServerRest {
         Map endpoints = new HashMap<>();
         endpoints.put("POST", "/api/calcola/post");
         endpoints.put("GET", "/api/calcola/get?operando1=X&operando2=Y&operatore=OP");
+        
+        endpoints.put("POST", "/api/converte/post");
+        endpoints.put("GET", "/api/converte/get?unitaMisura1=X&unitaMisura2=Y&operando=OP");
         info.put("endpoints", endpoints);
         
         Map operatori = new HashMap<>();
@@ -109,6 +112,7 @@ public class ServerRest {
         operatori.put("potenza", "POTENZA o ^");
         operatori.put("radice", "RADICE o sqrt");
         operatori.put("modulo", "MODULO o ||");
+        operatori.put("conversione", "CONVERSIONE DA MT A YD");
         info.put("operatori_supportati", operatori);
         
         String jsonRisposta = gson.toJson(info);
