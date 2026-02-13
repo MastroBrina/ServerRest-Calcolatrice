@@ -9,9 +9,9 @@ package serverrest;
  * @author delfo
  */
 public class ConversioneResponse {
-    private double operando1;
-    private double operando2;
-    private String operatore;
+    private double operando;
+    private String unitaMisura1;
+    private String unitaMisura2;
     private double risultato;
     private String operazione;
     
@@ -20,55 +20,54 @@ public class ConversioneResponse {
     }
     
     // Costruttore con parametri
-    public ConversioneResponse(double operando1, double operando2, 
-                             String operatore, double risultato) {
-        this.operando1 = operando1;
-        this.operando2 = operando2;
-        this.operatore = operatore;
+    public ConversioneResponse(String unitaMisura1, String unitaMisura2, double operando, double risultato) {
+        this.operando=operando;
+        this.unitaMisura1=unitaMisura1;
+        this.unitaMisura2=unitaMisura2;
         this.risultato = risultato;
-        this.operazione = String.format("%.2f %s %.2f = %.2f", 
-            operando1, operatore, operando2, risultato);
+        this.operazione = String.format("%s %s %.2f = %.2f", 
+            unitaMisura1, unitaMisura2, operando, risultato);
     }
-    
-    // Getter
-    public double getOperando1() {
-        return operando1;
+
+    public double getOperando() {
+        return operando;
     }
-    
-    public double getOperando2() {
-        return operando2;
+
+    public void setOperando(double operando) {
+        this.operando = operando;
     }
-    
-    public String getOperatore() {
-        return operatore;
+
+    public String getUnitaMisura1() {
+        return unitaMisura1;
     }
-    
+
+    public void setUnitaMisura1(String unitaMisura1) {
+        this.unitaMisura1 = unitaMisura1;
+    }
+
+    public String getUnitaMisura2() {
+        return unitaMisura2;
+    }
+
+    public void setUnitaMisura2(String unitaMisura2) {
+        this.unitaMisura2 = unitaMisura2;
+    }
+
     public double getRisultato() {
         return risultato;
     }
-    
-    public String getOperazione() {
-        return operazione;
-    }
-    
-    // Setter
-    public void setOperando1(double operando1) {
-        this.operando1 = operando1;
-    }
-    
-    public void setOperando2(double operando2) {
-        this.operando2 = operando2;
-    }
-    
-    public void setOperatore(String operatore) {
-        this.operatore = operatore;
-    }
-    
+
     public void setRisultato(double risultato) {
         this.risultato = risultato;
     }
-    
+
+    public String getOperazione() {
+        return operazione;
+    }
+
     public void setOperazione(String operazione) {
         this.operazione = operazione;
     }
+    
+   
 }

@@ -45,27 +45,27 @@ public class GetHandlerV3 implements HttpHandler {
             Map<String, String> parametri = estraiParametri(exchange.getRequestURI().getQuery());
             
             // Validazione parametri
-            if (!parametri.containsKey("operando1") || 
-                !parametri.containsKey("operando2") || 
-                !parametri.containsKey("operatore")) {
+            if (!parametri.containsKey("unitaMisura1") || 
+                !parametri.containsKey("unitaMisura2") || 
+                !parametri.containsKey("operando")) {
                 inviaErrore(exchange, 400, 
-                    "Parametri mancanti. Necessari: operando1, operando2, operatore");
+                    "Parametri mancanti. Necessari: unitaMisura1, unitaMisura2, operando");
                 return;
             }
             
             // Parsing dei valori
-            double operando1 = Double.parseDouble(parametri.get("operando1"));
-            double operando2 = Double.parseDouble(parametri.get("operando2"));
-            String operatore = parametri.get("operatore");
+            String unitaMisura1 = parametri.get("unitaMisura1").toString();
+            String unitaMisura2 = parametri.get("unitaMisura2").toString();
+            Double operando = Double.parseDouble("operando");
             
             // Esegue il calcolo
-            double risultato = CalcolatriceServiceV2.calcola(operando1, operando2, operatore);
+            double risultato = ConversioneService.calcola(unitaMisura1, unitaMisura2, operando);
             
             // Crea l'oggetto risposta
-            OperazioneResponseV2 response = new OperazioneResponseV2(
-                operando1,
-                operando2,
-                operatore,
+            ConversioneResponse response = new ConversioneResponse(
+                unitaMisura1,
+                unitaMisura2,
+                operando,
                 risultato
             );
             
@@ -75,7 +75,7 @@ public class GetHandlerV3 implements HttpHandler {
             inviaRisposta(exchange, 200, jsonRisposta);
             
         } catch (NumberFormatException e) {
-            inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
+            inviaErrore(exchange, 400, "unitaMisura non valide. Devono essere stringhe");
         } catch (IllegalArgumentException e) {
             inviaErrore(exchange, 400, e.getMessage());
         } catch (Exception e) {

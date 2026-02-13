@@ -49,7 +49,7 @@ public class PostHandlerV3 implements HttpHandler {
             );
             
             // GSON converte automaticamente il JSON in oggetto Java
-            OperazioneRequest request = gson.fromJson(reader, OperazioneRequest.class);
+            ConversioneRequest request = gson.fromJson(reader, ConversioneRequest.class);
             reader.close();
             
             // Validazione
@@ -58,23 +58,23 @@ public class PostHandlerV3 implements HttpHandler {
                 return;
             }
             
-            if (request.getOperatore() == null || request.getOperatore().trim().isEmpty()) {
+            if (request.getUnitaMisura1() == null || request.getUnitaMisura1().trim().isEmpty()||request.getUnitaMisura2() == null || request.getUnitaMisura2().trim().isEmpty()) {
                 inviaErrore(exchange, 400, "Operatore mancante o vuoto");
                 return;
             }
             
             // Esegue il calcolo
-            double risultato = CalcolatriceServiceV2.calcola(
-                request.getOperando1(),
-                request.getOperando2(),
-                request.getOperatore()
+            double risultato = ConversioneService.calcola(
+                request.getUnitaMisura1(),
+                request.getUnitaMisura2(),
+                request.getOperando()
             );
             
             // Crea l'oggetto risposta
-            OperazioneResponseV2 response = new OperazioneResponseV2(
-                request.getOperando1(),
-                request.getOperando2(),
-                request.getOperatore(),
+            ConversioneResponse response = new ConversioneResponse(
+               request.getUnitaMisura1(),
+                request.getUnitaMisura2(),
+                request.getOperando(),
                 risultato
             );
             
